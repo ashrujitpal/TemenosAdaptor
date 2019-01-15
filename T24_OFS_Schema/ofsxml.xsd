@@ -1,0 +1,1434 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" id="MK2d38727cce3c3a953ab3acfcb8d1ccc43e3253ae2f81a59bdd6c6259923115053f8aff4aec098624ae2ad637f0052cd40ed4a4fb44b644d47940b58ee582964f7b7fa4355915a244324ee3b6df7ce30070e5b199f66e6efcf7ec81ee8cd2e9b7de9e5a92b137079e0a52dfb841cfae54b25ec1d6735ca2a343b5df453b372cb6" targetNamespace="http://www.temenos.com/GLOBUS/OFSML/120" xml:encoding="UTF-8" xml:lang="en" xml:version="1.0" xmlns="http://www.temenos.com/GLOBUS/OFSML/120" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.temenos.com/GLOBUS/OFSML/120 ../ofsml/xsd/ofsml12.xsd">
+        <xsd:annotation>
+                <xsd:documentation xml:lang="en">
+                        TEMENOS Connector OFSML Schema (OFSML 1.2.2 Revision 01).
+                        Author: Kevin Perera.
+                        Copyright 2004 Temenos.com. All rights reserved.
+                        This schema is intended for the technical-level description of any OFS-XML message via the 'GLOBUS OFS
+                        request-response' interface.  The root element of the schema is defined by the 'Globus' element.
+                        Note that wildcard elements exist in the OFSML Schema with processing set to 'lax'.  Any element used in
+                        substitution of a wildcard in OFSML should qualify it's namespace and schema location or use fully qualified elements.
+                        Note: the service request and service response model groups in OFSML 1.2 are backward compatible with the OFSML 1.1
+                        specification, but a number of elements from the OFSML 1.1 specification have been deprecated.  Additionally,
+                        OFSML 1.2 header model groups have changed and are not compatible with the OFSML 1.1 headers specifications.
+                        See the documentation of the individual element definitions for further information.
+                        OFSML 1.2.1 included a serviceSend model group, which includes a single element type ofsEvent for the representation
+                        of simple business events (based on GLOBUS transaction triggers).  Also included in OFSML 1.2.1 were a number of
+                        minor (additive) revisions on the headers and failed transaction handling.
+                        OFSML 1.2.2 adds an additional element in the fault details for duplicate message notification.
+                </xsd:documentation>
+        </xsd:annotation>
+        <xsd:group name="ofsml11ServiceResponses">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  Defines the OFSML 1.1 service responses, corresponding to the OFSML 1.1 deprecated requests.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:choice>
+                        <xsd:element name="ofsTransactionResponse" type="ofsml11TransactionResponse"/>
+                        <xsd:element name="ofsEnquiryResponse" type="ofsml11EnquiryResponse"/>
+                        <xsd:element name="ofsRoutineResponse" type="ofsml11RoutineResponse"/>
+                </xsd:choice>
+        </xsd:group>
+        <xsd:group name="ofsml11ServiceRequests">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  Defines the OFSML 1.1 service requests.  Sending an OFSML 1.1 deprecated request will
+                                return the corresponding OFSML 1.1 deprecated response.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:choice>
+                        <xsd:element name="ofsTransaction" type="ofsml11TransactionRequest"/>
+                        <xsd:element name="ofsEnquiry" type="ofsml11EnquiryRequest"/>
+                        <xsd:element name="ofsRoutine" type="ofsml11RoutineRequest"/>
+                </xsd:choice>
+        </xsd:group>
+        <xsd:group name="ofsml12TransactionRequests">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Defines the optional set of OFSML 1.2+ service requests, representing transactions (input, authorise, see, reverse and
+                                delete operations), enquiries (standard and extended) and routines (standard and XML).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:choice>
+                        <xsd:element name="ofsTransactionInput" type="ofsmlTransactionInputRequest"/>
+                        <xsd:element name="ofsTransactionAuthorise" type="ofsmlTransactionAuthoriseRequest"/>
+                        <xsd:element name="ofsTransactionSee" type="ofsmlTransactionSeeRequest"/>
+                        <xsd:element name="ofsTransactionReverse" type="ofsmlTransactionReverseRequest"/>
+                        <xsd:element name="ofsTransactionDelete" type="ofsmlTransactionDeleteRequest"/>
+                </xsd:choice>
+        </xsd:group>
+        <xsd:group name="ofsml12ServiceRequests">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Defines the optional set of OFSML 1.2+ service requests, representing transactions (input, authorise, see, reverse and
+                                delete operations), enquiries (standard and extended) and routines (standard and XML).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:choice>
+                        <xsd:group ref="ofsml12TransactionRequests"/>
+                        <xsd:element name="ofsStandardEnquiry" type="ofsmlStandardEnquiryRequest"/>
+                        <xsd:element name="ofsExtendedEnquiry" type="ofsmlExtendedEnquiryRequest"/>
+                        <xsd:element name="ofsStandardRoutine" type="ofsmlStandardRoutineRequest"/>
+                        <xsd:element name="ofsXMLRoutine" type="ofsmlXMLRoutineRequest"/>
+                </xsd:choice>
+        </xsd:group>
+        <xsd:group name="ofsml12ServiceResponses">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Defines the optional set of OFSML 1.2+ service responses, representing transaction (processed successful and
+                                overrides, queued, off-line and failed), enquiries (standard and extended) and routines (standard and XML).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:choice>
+                        <xsd:element name="ofsTransactionProcessed" type="ofsmlTransactionProcessedResponse"/>
+                        <xsd:element name="ofsTransactionQueued" type="ofsmlTransactionQueuedResponse"/>
+                        <xsd:element name="ofsTransactionOffline" type="ofsmlTransactionOfflineResponse"/>
+                        <xsd:element name="ofsTransactionFailed" type="ofsmlTransactionFailedResponse"/>
+                        <xsd:element name="ofsStandardEnquiry" type="ofsmlStandardEnquiryResponse"/>
+                        <xsd:element name="ofsExtendedEnquiry" type="ofsmlExtendedEnquiryResponse"/>
+                        <xsd:element name="ofsStandardRoutine" type="ofsmlStandardRoutineResponse"/>
+                        <xsd:element name="ofsXMLRoutine" type="ofsmlXMLRoutineResponse"/>
+                </xsd:choice>
+        </xsd:group>
+        <xsd:group name="ofsmlStandardSignOnContext">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A standard GLOBUS sign on context.  Consists of a GLOBUS user name and password.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element minOccurs="0" name="userName" nillable="true" type="globusUserName"/>
+                        <xsd:element minOccurs="0" name="password" nillable="true" type="globusUserPassword"/>
+                </xsd:sequence>
+        </xsd:group>
+        <xsd:group name="ofsmlFaultElements">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The set of SOAP-based elements representing a technical error (response).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="ofsFaultCode" type="ofsmlFaultCode"/>
+                        <xsd:element name="ofsFaultMessage" nillable="true" type="ofsmlFaultMessage"/>
+                        <xsd:element minOccurs="0" name="ofsFaultContext" type="xsd:anyURI"/>
+                        <xsd:element minOccurs="0" name="ofsFaultDetails" type="ofsmlFaultDetails"/>
+                </xsd:sequence>
+        </xsd:group>
+        <xsd:attributeGroup name="ofsmlFieldIdentifier">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Defines the common attributes of a multi-value field.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:attribute name="name" type="globusFieldName" use="required"/>
+                <xsd:attribute name="mv" type="xsd:positiveInteger"/>
+                <xsd:attribute name="sv" type="xsd:positiveInteger"/>
+        </xsd:attributeGroup>
+        <xsd:attributeGroup name="ofsmlTransactionOptionalType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Defines the common attributes of an OFS transaction type.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:attribute name="application" type="globusApplicationName"/>
+                <xsd:attribute name="version" type="globusVersionName"/>
+        </xsd:attributeGroup>
+        <xsd:attributeGroup name="ofsmlTransactionType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Defines the common attributes of an OFS transaction type.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:attribute name="application" type="globusApplicationName" use="required"/>
+                <xsd:attribute name="version" type="globusVersionName"/>
+        </xsd:attributeGroup>
+        <xsd:attributeGroup name="ofsmlTransactionDirective">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Defines the common (super) set of directives representing OFS transaction handling in OFSML 1.2+.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:attribute name="function" type="ofsmlFunctionCode" use="required"/>
+                <xsd:attribute name="operation" type="ofsmlPVBOperationCode" use="required"/>
+        </xsd:attributeGroup>
+
+        <!--Generated by Turbo XML 2.4.1.100. Conforms to w3c http://www.w3.org/2001/XMLSchema-->
+
+
+        <!--ROOT ELEMENT DEFINITION FOR THE OFSML SCHEMA -->
+
+        <xsd:element final="#all" name="Globus">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The 'Globus' element is the ROOT element of the OFSML Schema.
+                                The element has optional members: ofsmlHeader, requestProcessing, responseProcessing.  The element has
+                                mandatory members: one of either serviceRequest (input message) or serviceResponse (output message).
+                                For all members (and children of members), limited use of nil elements may be used to denote optional elements
+                                (or that will be defaulted inside the application) to allow explicit use of verbose OFSML instance productions for clarity
+                                where required.
+                                All headers are optional.  Specifying a header element (with child elements or 'nil' content) forces the GLOBUS Connector
+                                to attempt to construct the headers in full on the response.  The ofsmlHeader element is used by the GLOBUS Connector to
+                                identify the message and to add some extended information such as time stamps.  The requestProcessing element defines
+                                the handling properties of a request message and the responseProcessing element the handling of the corresponding response.
+                                These optional elements are followed by either a service request (inbound), corresponding response (outbound), or a serviceSend
+                                (one-way outbound) where a serviceRequest element is an OFS transaction (application/version), OFS enquiry or an OFS routine
+                                request, a serviceResponse element is the corresponding response and a serviceSend element is an ofsEvent.  An OFS fault may
+                                be substituted in the serviceResponse or serviceSend the elements, indicating a failure to process the message.  Note some elements
+                                of the ofsmlHeader and requestProcessing elements are not intended for direct use by the caller (at sending time), but will be returned
+                                completed by the system should the caller specify an empty (nil) element tag for either of these elements.
+                                Any OFSML document (request, response or send) may be signed by the GLOBUS Connector, via the digital signature attribute. Extracting
+                                the value of the signature attribute from the document renders the exact content of the signed document.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                        <xsd:sequence>
+                                <xsd:element minOccurs="0" name="ofsmlHeader" nillable="true" type="ofsmlHeader"/>
+                                <xsd:element minOccurs="0" name="requestProcessing" nillable="true" type="ofsmlRequestProcessing"/>
+                                <xsd:element minOccurs="0" name="responseProcessing" nillable="true" type="ofsmlResponseProcessing"/>
+                                <xsd:choice>
+                                        <xsd:element name="serviceRequest" type="ofsmlServiceRequest"/>
+                                        <xsd:element name="serviceResponse" type="ofsmlServiceResponse"/>
+                                        <xsd:element name="serviceSend" type="ofsmlServiceSend"/>
+                                </xsd:choice>
+                        </xsd:sequence>
+                        <xsd:attribute name="signature" type="xsd:token"/>
+                </xsd:complexType>
+        </xsd:element>
+
+        <!-- CUSTOM ROUTINE RESPONSE ELEMENT DEFINITION-->
+
+        <xsd:element final="#all" name="GlobusRoutineResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                This element is for use in custom routines ONLY.  Custom routines that accept and return parameters as XML must
+                               use this element definition for their response.
+                                This is intended for routines that generate an XML document fragment.  In the event of an error in processing, a
+                                routine should return error details using the sequence of 'ofsFault' elements with the error flagged by the status
+                                attribute on this model group. In an error condition, the ofsFault elements returned from the routine are mapped to the
+                               main error handling features of OFSML.  In a normal processing condition (no error), the content (note: only the content)
+                               of the GlobusRoutineResponse element is returned in the body of the OFSML ofsRoutineResponse element (i.e. without the
+                               GlobusRoutineResponse tags).  In an exceptional processing condition (error), the ofsFault tags are mapped to the main OFSML
+                                response document including (if supplied) the ofsFaultDetails.  If ofsFaultDetails are not supplied, the GLOBUS Connector will
+                                attempt to insert the standard ofsFault details (the original request).
+                                Note that the request and (normal) response document fragment from a routine generating XML is restricted to a single root tag
+                                for the document fragment.  This root tag, which must not be a definition from the OFSML namespace, should be defined as the
+                                root tag in the extension Schema.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType mixed="true">
+                        <xsd:choice>
+                                <xsd:any minOccurs="0" namespace="##other" processContents="lax"/>
+                                <xsd:group ref="ofsmlFaultElements"/>
+                        </xsd:choice>
+                        <xsd:attribute name="status" type="ofsmlRoutineStatus" use="required"/>
+                </xsd:complexType>
+        </xsd:element>
+
+        <!-- COMPLEX DATATYPE DEFINITIONS -->
+
+        <xsd:complexType final="#all" name="ofsmlHeader">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model group.  The corresponding OFSML 1.1 model group definition is no longer supported.  The main header of any OFSML
+                                instance document, used for all service requests and responses.  Note no grammar rules enforce the usage of
+                                this header for requests and responses. Unrequired information supplied on a request (such as the request channel) will be disposed.
+                                On a service request, a nil tag may be sent denoting a request by the caller to generate all possible header information on the response.  Optionally,
+                                the request id, correlation id, request expiry time and response expiry time may be supplied.  If any of these elements are supplied on a request, the
+                                GLOBUS Connector will attempt to use their values to override the associated parameters for that specific request.
+                                On a service response, the header provides the request channel used and request id, plus (where available) the requesting user id, company, the
+                                request correlation id, request date-time (sending date-time), request expiry duration, the response date-time and the response expiry duration.  For
+                                expiry times, where the duration is set to zero no expiry duration was specified.
+                                Generally, this header is generated on request by sending a nil ofsmlHeader element on the request message or is automatically generated in the
+                                event of a fault response.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:choice>
+                        <xsd:sequence>
+                                <xsd:element minOccurs="0" name="requestId" type="ofsmlMessageReference"/>
+                                <xsd:element minOccurs="0" name="correlationId" type="ofsmlMessageReference"/>
+                                <xsd:element minOccurs="0" name="requestExpiryTime" type="xsd:duration"/>
+                                <xsd:element minOccurs="0" name="responseExpiryTime" type="xsd:duration"/>
+                        </xsd:sequence>
+                        <xsd:sequence>
+                                <xsd:element name="requestChannel" type="ofsmlChannelName"/>
+                                <xsd:element minOccurs="0" name="userName" type="globusUserName"/>
+                                <xsd:element minOccurs="0" name="company" type="globusCompanyId"/>
+                                <xsd:element name="requestId" type="ofsmlMessageReference"/>
+                                <xsd:element minOccurs="0" name="correlationId" type="ofsmlMessageReference"/>
+                                <xsd:element name="requestTimeStamp" type="xsd:dateTime"/>
+                                <xsd:element minOccurs="0" name="requestExpiryTime" type="xsd:duration"/>
+                                <xsd:element name="responseTimeStamp" type="xsd:dateTime"/>
+                                <xsd:element minOccurs="0" name="responseExpiryTime" type="xsd:duration"/>
+                        </xsd:sequence>
+                </xsd:choice>
+                <xsd:attribute fixed="1" name="ofsmlRelease" type="xsd:positiveInteger"/>
+                <xsd:attribute fixed="2" name="ofsmlMajor" type="xsd:nonNegativeInteger"/>
+                <xsd:attribute fixed="2" name="ofsmlMinor" type="xsd:nonNegativeInteger"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlRequestProcessing">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model group.  The corresponding OFSML 1.1 model group definition is no longer supported.  When present consists
+                                of optional members and attributes denoting (technical) request handling directives to the GLOBUS Connector. The signMe directive
+                                requests digital signing of the document. The fireAndForget directive specifies how to handle responses (to supply or to
+                                dispose of responses). In the event of an error during processing of a request, the retryCount attribute is incremented
+                                each time the message is seen.  This provides a retry mechanism that extends beyond the boundry of the GC Server,
+                                up to the maxRetry limit.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:all>
+                        <xsd:element default="NONE" minOccurs="0" name="signMe" type="ofsmlSignatureDirective"/>
+                        <xsd:element default="NEVER" minOccurs="0" name="fireAndForget" type="ofsmlFireAndForgetDirective"/>
+                </xsd:all>
+                <xsd:attribute name="retryCount" type="xsd:positiveInteger"/>
+                <xsd:attribute default="5" name="maxRetry" type="xsd:positiveInteger"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlResponseProcessing">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Where some form of processing is requested on the response (message), the caller may specify such additional processing of
+                                the message via a W3C compliant XSLT that may be managed locally or deferred.  The type of processing
+                                is specified via the translatorContext element and the translation XSLT by the responseTranslator element.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:all>
+                        <xsd:element name="translatorContext" type="ofsmlTranslatorContext"/>
+                        <xsd:element name="responseTranslator" type="xsd:anyURI"/>
+                </xsd:all>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlServiceRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A service request consists of a single mandatory member denoting the security context of the caller, followed by one
+                                of transaction, enquiry or routine request elements.  OFSML 1.1 deprecated model groups are permitted.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="securityContext" nillable="true" type="ofsmlSecurityContext"/>
+                        <xsd:choice>
+                                <xsd:group ref="ofsml12ServiceRequests"/>
+                                <xsd:group ref="ofsml11ServiceRequests"/>
+                        </xsd:choice>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlServiceResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A service response forms the response to a corresponding service request.  For each specific type of request
+                                made by the caller (defined by the ofsmlServiceRequest model group), there will be a corresponding 'response' in the
+                                ofsmlServiceResponse.  Any business validation errors that occur during the processing of a request are returned in the
+                                body of the corresponding response element.  Any request that could not be (or was not) processed due to a technical
+                                error is returned as an ofsFault.  OFSML 1.1 deprecated model groups are permitted.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:choice>
+                        <xsd:element name="ofsFault" type="ofsmlFault"/>
+                        <xsd:group ref="ofsml12ServiceResponses"/>
+                        <xsd:group ref="ofsml11ServiceResponses"/>
+                </xsd:choice>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlServiceSend">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A service send forms an outbound, one-way message from GLOBUS.  May be a valid outbound message, or an ofsFault where
+                                an error occured.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:choice>
+                        <xsd:element name="ofsFault" type="ofsmlFault"/>
+                        <xsd:element name="ofsEvent" type="ofsmlBusinessEvent"/>
+                </xsd:choice>
+        </xsd:complexType>
+        <xsd:complexType mixed="true" name="ofsmlSecurityContext">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Consists of either a sign on context (GLOBUS user name and password), a simple nick-name (from a security sub-system) or an external
+                                definition (reserved for future use).  The contents of the security context may be encrypted by specifying the 'encrypt' attribute
+                                as 'true' (encrypted at message sending in the GLOBUS Connector Client only, decrypted by the GLOBUS Connector Server).  Where specified,
+                                the GLOBUS Connector uses PKI-based encryption for only the content of the securityContext element to secure the content of the
+                                element.  Where an external element definition is utilised, a Schema must be supplied and parsing errors will cause an ofsFault.
+                                An empty model may be utilised as a deferred directive; credentials should be supplied by a separate stage in the message generation.
+                                Note the target company of the request message may be specified separately from any of the options for security credentials.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:choice>
+                                <xsd:group ref="ofsmlStandardSignOnContext"/>
+                                <xsd:element name="nickName" type="ofsmlNickName"/>
+                                <xsd:any namespace="##other" processContents="strict"/>
+                        </xsd:choice>
+                        <xsd:element minOccurs="0" name="company" nillable="true" type="globusCompanyId"/>
+                </xsd:sequence>
+                <xsd:attribute default="false" name="encrypt" type="xsd:boolean"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlFault">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                In the event of a technical failure to process a service request, error details are returned (in place of the corresponding transaction,
+                                enquiry or routine response).  The failure details are structured in a SOAP 'fault' style.  Note that errors due to actual processing errors
+                                are returned in the     body of an ofsmlServiceResponse, faults are used only to denote failures to process a request (technical failures).
+                                The recoverable attribute is used as a flag to indicate if the body of the original request (the ofsmlServiceRequest content) is re-submittable
+                                without amendment.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:group ref="ofsmlFaultElements"/>
+                </xsd:sequence>
+                <xsd:attribute name="recoverable" type="xsd:boolean" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlTransactionInputRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes a transaction input service request.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element minOccurs="0" name="transactionId" nillable="true" type="globusTransactionId"/>
+                        <xsd:element maxOccurs="unbounded" name="field" nillable="true" type="ofsmlMVField"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="auxField" nillable="true" type="ofsmlMVField"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="ofsmlTransactionType"/>
+                <xsd:attribute default="PROCESS" name="operation" type="ofsmlPVBOperationCode"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlTransactionAuthoriseRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes a transaction authorise service request.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="transactionId" type="globusTransactionId"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="ofsmlTransactionType"/>
+                <xsd:attribute default="PROCESS" name="operation" type="ofsmlPVOperationCode"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlTransactionSeeRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes a transaction see (show) service request.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="transactionId" type="globusTransactionId"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="ofsmlTransactionType"/>
+                <xsd:attribute fixed="PROCESS" name="operation" type="ofsmlPVOperationCode"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlTransactionReverseRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes a transaction reverse service request.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="transactionId" type="globusTransactionId"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="ofsmlTransactionType"/>
+                <xsd:attribute default="PROCESS" name="operation" type="ofsmlPVOperationCode"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlTransactionDeleteRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes a transaction delete service request.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="transactionId" type="globusTransactionId"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="ofsmlTransactionType"/>
+                <xsd:attribute default="PROCESS" name="operation" type="ofsmlPVOperationCode"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlTransactionProcessedResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes a processed transaction response, where the overall processing status is indicated
+                                via the processingStatus attribute.  Note that override conditions may exist on a 'processed' transaction, denoted by
+                                the existance of override elements in the response.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="transactionId" type="globusTransactionId"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="field" type="ofsmlMVField"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="override" type="ofsmlOverrideField"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="auxField" type="ofsmlMVField"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="auxOverride" type="ofsmlOverrideField"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="ofsmlTransactionType"/>
+                <xsd:attribute name="processingStatus" type="ofsmlProcessingStatus" use="required"/>
+                <xsd:attribute name="auxProcessingStatus" type="ofsmlProcessingStatus"/>
+                <xsd:attributeGroup ref="ofsmlTransactionDirective"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlTransactionOfflineResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes an off-line transaction response (rejected due to GLOBUS running the close of business
+                                cycle - this option is configurable in GLOBUS).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="transactionId" nillable="true" type="globusTransactionId"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="field" type="ofsmlMVField"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="ofsmlTransactionType"/>
+                <xsd:attributeGroup ref="ofsmlTransactionDirective"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlTransactionQueuedResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes an off-line queued transaction response (accepted for processing at the start of the next
+                                business cycle).  An off-line reference is returned.  Where a transaction id was specified, this is returned also
+                                (otherwise a nil transactionId element is returned).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="offlineReference" type="globusOfflineReference"/>
+                        <xsd:element name="transactionId" nillable="true" type="globusTransactionId"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="field" type="ofsmlMVField"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="ofsmlTransactionType"/>
+                <xsd:attributeGroup ref="ofsmlTransactionDirective"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlTransactionFailedResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes a failure to process the transaction due to a business validation failure.  The original
+                                transaction request is returned, along with the fields in error.  If the GTS Control is configured (in GLOBUS) to
+                                accept failed transactions to the 'hold' work queue, the held attribute is set to true and the associated transaction
+                                ID reserved by GLOBUS is returned in the optional transactionId element.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element minOccurs="0" name="transactionId" nillable="true" type="globusTransactionId"/>
+                        <xsd:element maxOccurs="unbounded" name="error" type="ofsmlErrorField"/>
+                        <xsd:group ref="ofsml12TransactionRequests"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="ofsmlTransactionType"/>
+                <xsd:attributeGroup ref="ofsmlTransactionDirective"/>
+                <xsd:attribute default="false" name="held" type="xsd:boolean"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlStandardEnquiryRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2 model.  Denotes a standard (normalised) enquiry service request.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="selectionCriteria" type="ofsmlSelectionCriteria"/>
+                </xsd:sequence>
+                <xsd:attribute name="name" type="globusEnquiryName" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlExtendedEnquiryRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes a de-normalised (extended) enquiry service request.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="selectionCriteria" type="ofsmlSelectionCriteria"/>
+                </xsd:sequence>
+                <xsd:attribute name="name" type="globusEnquiryName" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlStandardEnquiryResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes a standard (normalised) enquiry service response.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="enquiryHeader" type="xsd:string"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="enquiryColumn" type="ofsmlEnquiryColumnDefinition"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="enquiryRecord" type="ofsmlStandardEnquiryRecord"/>
+                </xsd:sequence>
+                <xsd:attribute name="name" type="globusEnquiryName" use="required"/>
+                <xsd:attribute name="status" type="ofsmlEnquiryStatus" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlExtendedEnquiryResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes a de-normalised (extended) enquiry service request.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="enquiryHeader" type="xsd:string"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="enquiryColumn" type="ofsmlEnquiryColumnDefinition"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="enquiryRecord" type="ofsmlExtendedEnquiryRecord"/>
+                </xsd:sequence>
+                <xsd:attribute name="name" type="globusEnquiryName" use="required"/>
+                <xsd:attribute name="status" type="ofsmlEnquiryStatus" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlStandardRoutineRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes a standard (non-XML) custom routine service request.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="parameter" type="ofsmlRoutineParameter"/>
+                </xsd:sequence>
+                <xsd:attribute name="name" type="globusRoutineName" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlXMLRoutineRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  Denotes an XML custom routine service request.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:any minOccurs="0" namespace="##other" processContents="lax"/>
+                </xsd:sequence>
+                <xsd:attribute name="name" type="globusRoutineName" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlStandardRoutineResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  An OFSML (standard) routine response is the result of a service request to execute a custom routine in the GLOBUS
+                                environment where the routine is producing string-based output.  No validation of the output is performed, but forbidden characters are
+                                replaced with escape sequences.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                                <xsd:attribute name="name" type="globusRoutineName" use="required"/>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlXMLRoutineResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model.  An OFSML (XML) routine response is the result of a service request to execute a custom routine in the GLOBUS
+                                environment where the routine is directly producing an XML output compliant with the GlobusRoutineResponse element definition.
+                                The type (GLOBUS name) of the routine is denoted by the attributes.  Where an external element definition is utilised, XML parsing errors
+                                will cause an ofsFault element to be returned (XML validation processing is set to lax; a content model should be supplied but is not
+                                mandatory).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:any minOccurs="0" namespace="##other" processContents="lax"/>
+                </xsd:sequence>
+                <xsd:attribute name="name" type="globusRoutineName" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlBusinessEvent">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                OFSML 1.2+ model group.  Denotes a business event, generated as a result of an action within GLOBUS.  The source and type of
+                                the event are indicated by the associated attributes.  A business event is a generic representation of the state and content of any transaction.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="eventPublished" type="xsd:dateTime"/>
+                        <xsd:element name="eventTransmitted" type="xsd:dateTime"/>
+                        <xsd:element minOccurs="0" name="eventExpiry" type="xsd:duration"/>
+                        <xsd:element name="eventId" type="ofsmlMessageReference"/>
+                        <xsd:element minOccurs="0" name="status" type="ofsmlProcessingStatus"/>
+                        <xsd:element minOccurs="0" name="publishingUser" type="globusUserName"/>
+                        <xsd:element minOccurs="0" name="transactionId" type="globusTransactionId"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="field" type="ofsmlMVField"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="override" type="ofsmlOverrideField"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="auxField" type="ofsmlMVField"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="auxOverride" type="ofsmlOverrideField"/>
+                </xsd:sequence>
+                <xsd:attribute name="source" type="ofsmlEventSource" use="required"/>
+                <xsd:attribute name="type" type="ofsmlEventType" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="restriction" name="ofsmlMVField">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A multi-value field definition.  Note that the multi-value and sub-value attributes are optional; where not present the element may be
+                                used to represent a normal (non multi-value) field.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                                <xsd:attributeGroup ref="ofsmlFieldIdentifier"/>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlOverrideField">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                An override condition from GLOBUS, identifying the override condition and containing an optional override code.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                                <xsd:attribute name="code" type="globusOverrideCode"/>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlErrorField">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                An error condition from GLOBUS, identifying a field in error, the error condition and containing an optional error code.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                                <xsd:attributeGroup ref="ofsmlFieldIdentifier"/>
+                                <xsd:attribute name="code" type="globusErrorCode"/>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlSelectionCriteria">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A selection criteria provided by the caller when requesting information from GLOBUS via an enquiry.  Uses a
+                                Reverse-Polish style argument order.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="fieldName" type="globusFieldName"/>
+                        <xsd:element maxOccurs="unbounded" name="value" type="globusFieldValue"/>
+                </xsd:sequence>
+                <xsd:attribute name="operand" type="globusSelectionOperand" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlEnquiryColumnDefinition">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                An enquiry column definition provided in an enquiry response.  Note the default for the globusType attribute
+                                (the type of the column, as returned from GLOBUS) is an implicit GLOBUS string.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:token">
+                                <xsd:attribute name="id" type="globusFieldName" use="required"/>
+                                <xsd:attribute name="label" type="globusColumnLabel" use="required"/>
+                                <xsd:attribute name="globusType" type="globusDataType"/>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlStandardEnquiryRecord">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A single record returned by a standard enquiry response from GLOBUS.  Consists of a set of values that relate directly
+                                (correlated by the position index in a standard response) to the order of the enquiry column definitions of the related
+                                GLOBUS enquiry.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element maxOccurs="unbounded" name="column" type="ofsmlStandardColumn"/>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlExtendedEnquiryRecord">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A single record returned by an extended enquiry response from GLOBUS.  Consists of a set of values that relate directly
+                                (correlated by the id attribute) to the the enquiry column definitions of the related GLOBUS enquiry.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element maxOccurs="unbounded" name="column" type="ofsmlExtendedColumn"/>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ofsmlExtendedColumn">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The value of a column in an OFSML extend enquiry response.  The id attribute is used to denote the associated GLOBUS
+                                column identifier.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                                <xsd:attribute name="id" type="globusFieldName" use="required"/>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:complexType final="#all" mixed="true" name="ofsmlFaultMessage">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Where a (technical) failure to process a request has occurred, the fault message may be returned to help determine the cause.
+                                Note that the fault message may contain both a text error message, plus an optional (tagged) GLOBUS error code (for extensibility).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element minOccurs="0" name="globusErrorCode" nillable="true" type="globusErrorCode"/>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlFaultDetails">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Where a technical failure to process a request has occurred, the fault details may be returned to help determine the cause
+                                of the error.  The default is to return the original service request, but custom routines may return their own fault details
+                                where required via the GlobusRoutineResponse wrapper element.   Where an external element definition is utilised,
+                                parsing errors will cause a default ofsFault (XML parsing fault).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element minOccurs="0" name="securityContext" type="ofsmlSecurityContext"/>
+                        <xsd:element minOccurs="0" name="duplicateReference" nillable="true" type="ofsmlFaultDuplicateTrnRef"/>
+                        <xsd:choice>
+                                <xsd:group ref="ofsml12ServiceRequests"/>
+                                <xsd:group ref="ofsml11ServiceRequests"/>
+                                <xsd:any namespace="##other" processContents="lax"/>
+                        </xsd:choice>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlFaultDuplicateTrnRef">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Used to denote the reference of a previously processed transaction (held in the target GLOBUS database) where the unique message reference (UMR)
+                                matches the UMR on the current message (a fault condition).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:token">
+                                <xsd:attributeGroup ref="ofsmlTransactionOptionalType"/>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsmlRoutineParameter">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A parameter used in the invocation of a custom routine.  A specific delimiter, to precede the next parameter element instance,
+                                may be specified via the delimiter attribute.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                                <xsd:attribute default="," name="delimiter" type="ofsmlParameterDelimiter"/>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsml11TransactionRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  An OFSML transaction denotes a request by the caller to execute a specific GLOBUS application or version.  The
+                                attributes denote the transaction type (the GLOBUS unique identity of the application/version).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="ofsDirective" type="ofsml11TransactionDirective"/>
+                        <xsd:element minOccurs="0" name="transactionId" nillable="true" type="globusTransactionId"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="field" type="ofsmlMVField"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="auxField" type="ofsmlMVField"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="ofsmlTransactionType"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsml11TransactionResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  An OFSML transaction response is the result of a service request to execute a transaction (GLOBUS application or version).
+                                The transaction response contains all information pertaining to the execution of the transaction, including two levels of status information,
+                                transaction type and the associated processing directive, transaction id or off-line reference and all transaction data (fields, overrides and/or
+                                processing errors).  See the OFSML use cases for examples of transaction processing scenarios.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:choice>
+                        <xsd:sequence>
+                                <xsd:element name="ofsDirective" nillable="true" type="ofsml11TransactionDirective"/>
+                                <xsd:element name="processingStatus" type="ofsml11ProcessingStatus"/>
+                                <xsd:element minOccurs="0" name="auxProcessingStatus" type="ofsml11ProcessingStatus"/>
+                                <xsd:choice>
+                                        <xsd:element name="transactionId" nillable="true" type="globusTransactionId"/>
+                                        <xsd:element name="offlineReference" nillable="true" type="globusOfflineReference"/>
+                                </xsd:choice>
+                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="field" type="ofsmlMVField"/>
+                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="override" type="ofsmlOverrideField"/>
+                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="auxField" type="ofsmlMVField"/>
+                                <xsd:element maxOccurs="unbounded" minOccurs="0" name="auxOverride" type="ofsmlOverrideField"/>
+                        </xsd:sequence>
+                        <xsd:sequence>
+                                <xsd:element maxOccurs="unbounded" name="error" type="ofsmlErrorField"/>
+                                <xsd:element name="ofsTransaction" type="ofsml11TransactionRequest"/>
+                        </xsd:sequence>
+                </xsd:choice>
+                <xsd:attributeGroup ref="ofsmlTransactionType"/>
+                <xsd:attribute name="status" type="ofsml11TransactionStatus" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsml11EnquiryRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  An OFSML enquiry denotes a request by the caller to execute a GLOBUS enquiry.  The sole member is the
+                                set of optional selection criteria for the enquiry.  Note that the operand applied across multiple selectionCriteria elements is an implicit logical
+                                AND.  The type of the enquiry is denoted by the attributes (the GLOBUS name for the enquiry).  The response format may be requested as
+                                a normalised or de-normalised grid via the responseType attribute (default is normalised).  NOTE: only grid-type enquiries are supported;
+                                targetting non-grid enquiries will result in malformed XML responses with a standard format and an ofsFault in extended format.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="selectionCriteria" type="ofsmlSelectionCriteria"/>
+                </xsd:sequence>
+                <xsd:attribute name="name" type="globusEnquiryName" use="required"/>
+                <xsd:attribute default="STANDARD-OFSML" name="responseType" type="ofsml11EnquiryFormat"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsml11EnquiryResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  An OFSML enquiry response is the result of a service request to execute an enquiry in the
+                                GLOBUS environment.  It consists of a mandatory status, an optional set of enquiry headers (text) and an optional set of enquiry
+                                column definitions followed by one or more enquiry records (containing the column values, by row).  The type (GLOBUS
+                                unique name) of the enquiry is denoted by the attributes, plus the return status of executing the enquiry.
+                                The attributes also denote the type of the response (standard or extended OFSML, where extended indicates the
+                                enquiry definition data is partially de-normalised, with column elements referencing the enquiry column id via attributes).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="enquiryHeader" type="xsd:string"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="enquiryColumn" type="ofsmlEnquiryColumnDefinition"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="enquiryRecord" type="ofsml11EnquiryRecord"/>
+                </xsd:sequence>
+                <xsd:attribute name="name" type="globusEnquiryName" use="required"/>
+                <xsd:attribute name="status" type="ofsmlEnquiryStatus" use="required"/>
+                <xsd:attribute name="responseType" type="ofsml11EnquiryFormat" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsml11RoutineRequest">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  An OFSML routine denotes a request by the caller to execute a custom routine in the GLOBUS environment.
+                                The routine type (the GLOBUS name for the routine) is denoted by the attributes.  Note that the output of a routine may be structured (XML)
+                                or unstructured (for direct parsing and/or interpretation by the caller).  Where routines are accepting/returning an XML document
+                                fragment, they must conform to the guidelines for use of the GlobusRoutineResponse element.  For normal (unstructured) use, an
+                                arbitrary number of parameters may be passed to the routine, where the default parameter delimiter (to be used by the routine) is
+                                denoted by the associated attribute.  If no delimiter is specified, the default is a single semi-colon. For XML (structured) use, both input
+                                and output are restricted to a single root element of an XML document fragment.  See the OFSML use cases for examples of
+                               custom routine invocations and responses.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:choice minOccurs="0">
+                                <xsd:element maxOccurs="unbounded" name="parameter" type="ofsmlRoutineParameter"/>
+                                <xsd:element name="xParameter" type="ofsml11RoutineXMLParameter"/>
+                        </xsd:choice>
+                </xsd:sequence>
+                <xsd:attribute name="name" type="globusRoutineName" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType mixed="true" name="ofsml11RoutineResponse">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  An OFSML routine response is the result of a service request to execute a custom routine in the GLOBUS
+                                environment.  The response consists of a single mandatory member detailing the output of the routine.  The output of a routine may be
+                                unstructured (the default), requiring that the caller is explicitly aware of the return format, or structured to support an agreed
+                                XML Schema between the target routine and the caller.  In the case of a routine returning XML, the routine's output is treated as
+                                a document fragment and must utilise the wrapper element GlobusRoutineResponse for it's return value.  The type (GLOBUS
+                                name of the routine) of the routine is denoted by the attributes.  Where an external element definition is utilised, XML parsing errors
+                                will cause an ofsFault element to be returned (XML validation processing is set to strict; a content model must be supplied).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:any minOccurs="0" namespace="##other" processContents="strict"/>
+                </xsd:sequence>
+                <xsd:attribute name="name" type="globusRoutineName" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsml11TransactionDirective">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  The processing directive of a transaction service request to GLOBUS/OFS.  Indicates the
+                                function and operation for a transaction request.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:token">
+                                <xsd:attributeGroup ref="ofsmlTransactionDirective"/>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:complexType final="#all" name="ofsml11EnquiryRecord">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  A single record returned by an enquiry response from GLOBUS.  Consists of a set of values that
+                                relate directly (correlated by the position index in a standard response or the column id attribute in an extended response) to the enquiry
+                                column definition of the related GLOBUS enquiry.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:choice>
+                        <xsd:element maxOccurs="unbounded" name="column" type="ofsml11Column"/>
+                </xsd:choice>
+        </xsd:complexType>
+        <xsd:complexType name="ofsml11Column">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  The value of a column in an OFSML enquiry response.  The id attribute is used to denote the associated GLOBUS
+                                column identifier in the column definitions only where an extended (OFSML) response is requested.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                                <xsd:attribute name="id" type="globusFieldName"/>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:complexType final="#all" mixed="true" name="ofsml11RoutineXMLParameter">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  A parameter used in the invocation of a custom routine accepting an XML document fragment as input. Any
+                                arbitrary XML document fragment may be specified in the instance document.  Where an external element definition is utilised, parsing errors
+                                will cause a default ofsFault to be generated (XML parsing fault).  Note that the input is restricted to a single document fragment root.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:any namespace="##other" processContents="lax"/>
+                </xsd:sequence>
+        </xsd:complexType>
+
+        <!-- SIMPLE DATATYPE DEFINITIONS -->
+
+        <xsd:simpleType name="ofsmlSignatureDirective">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Used to control the presence of a digital signature on OFSML document instance.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="NONE"/>
+                        <xsd:enumeration value="BOTH"/>
+                        <xsd:enumeration value="REQUEST-ONLY"/>
+                        <xsd:enumeration value="RESPONSE-ONLY"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlFireAndForgetDirective">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Directive to instruct the GC how to manage the request/response semantics.
+                                NEVER: never use fire and forget mode (dispose of all responses).
+                                ALWAYS: always use fire and forget mode (do not dispose of reponses).
+                                ON-FAIL: use fire and forget only for processing failures (dispose failed responses).
+                                ON-SUCCESS: use fire and forget only for successfully processed messages (dispose successful responses).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="NEVER"/>
+                        <xsd:enumeration value="ALWAYS"/>
+                        <xsd:enumeration value="ON-FAILURE"/>
+                        <xsd:enumeration value="ON-SUCCESS"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlTranslatorContext">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The context of the response translation request, which may be 'local processing' (performed by the GLOBUS Connector)
+                                or 'deferred' to another service (typically the caller).  Local HTML rendering of XML documents may be requested also, for
+                                improved message readability via display in standard Web Browser applications.
+                                LOCAL: Apply the transform specified to the OFSML output and return the tranformed document.
+                                DEFERRED: This is intended for audit purposes only, to allow a caller to inform all actors that the response message will be transformed.
+                                HTML-RENDER: Apply the stylesheet (URI) reference to the OFSML response message.  This is for easier viewing of messages
+                                from browsers that support W3C compliant stylesheet processing.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="LOCAL"/>
+                        <xsd:enumeration value="DEFERRED"/>
+                        <xsd:enumeration value="HTML-RENDER"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlFaultCode">
+                <xsd:annotation>
+                        <xsd:documentation>
+                                In the event of a (technical) failure to process a request (i.e. the request could not be handled), the error condition may be signalled
+                               via one of the fault codes.  The 'recoverable' attribute denotes if the request may be retried without repair by the caller.
+                                Note that in the event of a response (a processed message) reaching it's expiry time, any subsequent compensating action is the
+                               responsibility of the caller.
+                                DUPLICATE-MESSAGE: The UMR (correlation id) specified has been used on a previous message (recoverable = "true").
+                                EVENT-SOURCE-INVALID: The event source requested is not defined in the system (recoverable = "false").
+                                EVENT-TYPE-INVALID: The event type requested is not defined in the system (recoverable = "false").
+                                GLOBUS-UNAVAILABLE: Sessions to GLOBUS are unavailable or disabled (recoverable = true).
+                                INVALID-RECORD: The requested record does not exist in the GLOBUS database (recoverable = false).
+                                MAX-EXTERNAL-RETRY: The maximum retry attempts was reached, as defined in the OFSML instance document (recoverable = true).
+                                RECORD-LOCKED: The target record (in GLOBUS) was locked (recoverable = true).
+                                REQUEST-EXPIRED: The request expiry time was reached before it was submitted for processing (recoverable = true).
+                                REQUEST-INVALID: The request (type) was recognised by GLOBUS but not well-formed e.g. incorrect field names (recoverable = false).
+                                REQUEST-TIMEOUT: The request time-out period was reached during processing (recoverable = true).
+                                SECURITY-VIOLATION: GLOBUS reported the specified userid is not recognised or is not permitted to execute the requested service (recoverable = true).
+                                UNDEFINED-FATAL-ERROR: An unknown error occurred (recoverable = false).
+                                UNRECOGNISED-REQUEST: The request (type) was not recognised by GLOBUS e.g. incorrect application name (recoverable = false).
+                                VOID-RESPONSE: GLOBUS returned a void response - typically implies the request was not processed due to technical errors, for example in the
+                                UniVerse API (recoverable = true).
+                                XML-PARSING-ERROR: Where an error occurred parsing an OFSML message (not a valid XML document) - typically, this only occurs
+                                where custom routines return XML document fragments using the 'wildcard' substitution or where a native asynchronous message bus
+                               communications channel is being utilised (recoverable = false).
+                                XML-VALIDATION-ERROR: Where an XML document validation error occurred parsing an OFSML message (valid XML but invalid
+                                schema instance) - typically, this only occurs when custom routines return XML document fragments using the 'wildcard' substitution
+                                and provide an external schema to validate their document fragments,  or where a native asynchronous message bus
+                               communications channel is being utilised (recoverable = false).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="DUPLICATE-MESSAGE"/>
+                        <xsd:enumeration value="EVENT-SOURCE-INVALID"/>
+                        <xsd:enumeration value="EVENT-TYPE-INVALID"/>
+                        <xsd:enumeration value="GLOBUS-UNAVAILABLE"/>
+                        <xsd:enumeration value="INVALID-RECORD"/>
+                        <xsd:enumeration value="MAX-EXTERNAL-RETRY"/>
+                        <xsd:enumeration value="RECORD-LOCKED"/>
+                        <xsd:enumeration value="REQUEST-EXPIRED"/>
+                        <xsd:enumeration value="REQUEST-INVALID"/>
+                        <xsd:enumeration value="REQUEST-TIMEOUT"/>
+                        <xsd:enumeration value="SECURITY-VIOLATION"/>
+                        <xsd:enumeration value="UNDEFINED-FATAL-ERROR"/>
+                        <xsd:enumeration value="UNRECOGNISED-REQUEST"/>
+                        <xsd:enumeration value="VOID-RESPONSE"/>
+                        <xsd:enumeration value="XML-PARSING-ERROR"/>
+                        <xsd:enumeration value="XML-VALIDATION-ERROR"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlPVBOperationCode">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The GLOBUS directive for handling any transaction processing request.
+                                PROCESS: Directs GLOBUS to fully processes the message and commit any updates to the database.
+                                VALIDATE: Directs GLOBUS to simulate the full processing of the message to include all validation but not commit any
+                                updates to the database.  This returns all default values (only for fields where default values are present).
+                                BUILD: Directs GLOBUS to attempt to build a transaction.  Field values are defaulted where available and field values supplied
+                                are used in building the transaction data.  Returns a status to indicate the validity of the built transaction.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="PROCESS"/>
+                        <xsd:enumeration value="VALIDATE"/>
+                        <xsd:enumeration value="BUILD"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlPVOperationCode">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The GLOBUS directive for handling any transaction processing request.
+                                PROCESS: Directs GLOBUS to fully processes the message and commit any updates to the database.
+                                VALIDATE: Directs GLOBUS to simulate the full processing of the message to include all validation but not commit any
+                                updates to the database.  This returns all default values (only for fields where default values are present).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="PROCESS"/>
+                        <xsd:enumeration value="VALIDATE"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlFunctionCode">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The standard function code of any transaction procesing request to GLOBUS.  Function codes
+                                are: 'INPUT' - input/insert the transaction; 'SEE' - see (show) the transaction (requires a transactionId); 'AUTHORISE' - authorise
+                                the transaction;  'REVERSE' - reverse (unwind) the transaction; 'DELETE' - delete the transaction.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="INPUT"/>
+                        <xsd:enumeration value="SEE"/>
+                        <xsd:enumeration value="AUTHORISE"/>
+                        <xsd:enumeration value="REVERSE"/>
+                        <xsd:enumeration value="DELETE"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlProcessingStatus">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Represents an extended processing return code, mapped from RECORD.STATUS (if not present, a status = OK is assumed).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="OK"/>
+                        <xsd:enumeration value="REVERSED"/>
+                        <xsd:enumeration value="DELETED"/>
+                        <xsd:enumeration value="NOT-AUTHORISED"/>
+                        <xsd:enumeration value="ON-HOLD"/>
+                        <xsd:enumeration value="MATURED"/>
+                        <xsd:enumeration value="PARTIAL-INPUT"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusSelectionOperand">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The standard operands used in a selection criteria when requesting grid-based (enquiry) information from GLOBUS.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="EQ"/>
+                        <xsd:enumeration value="NE"/>
+                        <xsd:enumeration value="GE"/>
+                        <xsd:enumeration value="GT"/>
+                        <xsd:enumeration value="LE"/>
+                        <xsd:enumeration value="LT"/>
+                        <xsd:enumeration value="UL"/>
+                        <xsd:enumeration value="LK"/>
+                        <xsd:enumeration value="NR"/>
+                        <xsd:enumeration value="RG"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlEnquiryStatus">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The return status from executing an enquiry.
+                               OK: The enquiry request resulted in a data set.
+                               NO-RECORDS: The enquiry request resulted in a null data set.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="OK"/>
+                        <xsd:enumeration value="NO-RECORDS"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlRoutineStatus">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The return status from executing a (custom) routine where the routine returns the XML document fragment
+                                defined by complex type GlobusRoutineResponse.
+                               OK: The routine reported it executed correctly - the response content will be mapped to the routineResponse element.
+                               FAILED: The routine reported an execution failure - the response content will be mapped to an ofsFault element.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="OK"/>
+                        <xsd:enumeration value="FAILED"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusDataType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The GLOBUS datatype for a field.  If not specified, the default type (in GLOBUS) is 'STRING'.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="STRING"/>
+                        <xsd:enumeration value="NUMERIC"/>
+                        <xsd:enumeration value="AMOUNT"/>
+                        <xsd:enumeration value="DATE"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlMessageReference">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A request or response message reference.  The GLOBUS Connector generates UUIDs for all responses
+                                and for requests where the GC APIs are used, or utilises the native message transport IDs where available.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:minLength value="12"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlChannelName">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The unique name of a (technical) communications channel to GLOBUS (via the GLOBUS Connector).
+                                Note that channel names must be a minimum of 4 characters long in an OFSML document.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:minLength value="3"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlStandardColumn">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The value of a column in an OFSML standard enquiry response.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:string"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusUserName">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A unique GLOBUS user name.  May represent a unique user, an interface daemon, business channel or an external application.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusUserPassword">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A GLOBUS user password.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:string"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusCompanyId">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The GLOBUS name that uniquely identifies a company.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlNickName">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A simple representation of a callers security credentials.  Used by a security sub-system only, for example, for passing a session id.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:minLength value="8"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlParameterDelimiter">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Used to indicate a single-character delimiter used to separate parameters in a call to GLOBUS.  This
+                                is only used for the invocation of custom routines.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:maxLength value="1"/>
+                        <xsd:minLength value="1"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlEventSource">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Used to indicate an event source (the publishing entity of the event).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:minLength value="1"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsmlEventType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Used to indicate an event type (the context of the event).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:minLength value="1"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusApplicationName">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The unique GLOBUS name of an application.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:minLength value="1"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusVersionName">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The GLOBUS name of a version.  Applies to GLOBUS applications only.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:minLength value="1"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusEnquiryName">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The unique GLOBUS name of an enquiry.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:minLength value="1"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusRoutineName">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The unique GLOBUS name of a custom routine.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:minLength value="1"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusTransactionId">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The unique id of a transaction in GLOBUS.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusOfflineReference">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The off-line reference, return when GLOBUS is off-line but configured to queue transactions for
+                               processing once the system returns to the on-line state.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusFieldName">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The GLOBUS name of a field in an OFSML message.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:minLength value="1"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusOverrideCode">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A specific code returned from GLOBUS representing an override condition.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusErrorCode">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                A specific code returned from GLOBUS representing an error condition.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusFieldValue">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The value of a single field.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:string"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="globusColumnLabel">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                The text name of a column.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:string"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsml11TransactionStatus">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  The return status from executing a transaction.
+                                OK: The transaction was processed and committed to the database.
+                                OVERRIDE: The transaction was processed but an override condition exists.
+                                OFFLINE: GLOBUS reported it's status as off-line.  Dependent on the configuration of GLOBUS/OFS,
+                                the transaction may be queued in a GLOBUS hold queue for processing once the system is back on-line.
+                                FAILED: The transaction failed - no updates were committed to the database unless the GTS control specified
+                                the transaction should be placed in 'hold'.
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="OK"/>
+                        <xsd:enumeration value="OVERRIDE"/>
+                        <xsd:enumeration value="OFFLINE"/>
+                        <xsd:enumeration value="FAILED"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsml11ProcessingStatus">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  The status of the transaction (the data record), returned from GLOBUS.
+                                This status will indicate the state of the business transaction post any processing completed while executing
+                                the request.  It represents a summary code, which is further detailed in the record.status field of the transaction.
+                                Note that QUEUED and NOT-QUEUED can only be returned when GLOBUS is off-line (running the
+                                end of day processing).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="OK"/>
+                        <xsd:enumeration value="REVERSED"/>
+                        <xsd:enumeration value="NOT-AUTHORISED"/>
+                        <xsd:enumeration value="ON-HOLD"/>
+                        <xsd:enumeration value="MATURED"/>
+                        <xsd:enumeration value="PARTIAL-INPUT"/>
+                        <xsd:enumeration value="QUEUED"/>
+                        <xsd:enumeration value="NOT-QUEUED"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ofsml11EnquiryFormat">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                Deprecated OFSML 1.1 model.  The type of the OFSML response (applies to enquiry services only).  Two 'sub-types' of OFSML documents
+                                are available via the GLOBUS Connector, standard and extended.
+                                STANDARD-OFSML: Denotes the normal OFSML enquiry (grid-type structure, normalised column definitions in the service response header).
+                                EXTENDED-OFSML: Denotes the enhanced OFSML enquiry (grid-type structure, column names additionally de-normalised into the record sets).
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:enumeration value="STANDARD-OFSML"/>
+                        <xsd:enumeration value="EXTENDED-OFSML"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+</xsd:schema>
